@@ -3,6 +3,7 @@ import gptService from "../services/gpt.service";
 
 const AskPage = () => {
 
+    //@ts-ignore
     const [conversation, setConversation] = useState<any[]>([]);
     const [messageEvent, setMessageEvent] = useState('');
     const [aiMessages, setAiMessages] = useState<string[]>([]);
@@ -18,7 +19,6 @@ const AskPage = () => {
         if (recording === true || isDisabled === true) {
             return;
         }
-        console.log('пишем')
         setRecording(true);
         speechRecognizer.start();
     }
