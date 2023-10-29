@@ -1,7 +1,9 @@
+import AskPage from "./pages/AskPage";
+
 function App() {
   return (
     <>
-     init
+     <AskPage/>
     </>
   )
 }
