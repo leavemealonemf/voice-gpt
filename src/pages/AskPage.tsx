@@ -1,6 +1,9 @@
 import { useState, BaseSyntheticEvent } from "react";
 import gptService from "../services/gpt.service";
 import MessageTyping from "../componets/ui/MessageTyping";
+import { inputValidate } from "../utils/input-validate";
+import messageIcon from "../assets/message.svg";
+import Notification from "../componets/ui/Notification";
 
 const AskPage = () => {
 
@@ -12,6 +15,7 @@ const AskPage = () => {
     const [recording, setRecording] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [isSpeechEmpty, setIsSpeechEmpty] = useState(false);
 
     const windowObj: any = window;
 
@@ -32,6 +36,17 @@ const AskPage = () => {
         speechSynthesis.speak(textToTalk);
     }
   
+    const showEmptySpeechError = () => {
+        setIsSpeechEmpty(true);
+        setTimeout(() => {
+            setIsSpeechEmpty(false);
+        }, 3000)
+    }
+
+    speechRecognizer.onerror = () => {
+        setRecording(false);
+        showEmptySpeechError();
+    }
 
     speechRecognizer.onresult = (e: any) => {
         setRecording(false);
@@ -84,7 +99,7 @@ const AskPage = () => {
                 />
                 <div className="flex flex-row gap-2 mt-3 items-center">
                     <button
-                        disabled={isDisabled}
+                        disabled={isDisabled || !inputValidate(messageEvent)}
                         className="border-2 p-1 enabled:hover:text-black enabled:hover:bg-white disabled:opacity-20"
                         onClick={() => sendMessage()}>Спросить</button>
                     <div onClick={() => speech()} 
@@ -99,14 +114,13 @@ const AskPage = () => {
                 <div className="mt-2 flex flex-col">
                     {aiMessages?.map((aiMessage, index) => 
                         <div className="mt-3 flex float-left gap-1" key={index}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" className="w-5 h-5 mt-1">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-                            </svg>
+                            <img src={messageIcon} alt="message" className="w-3 h-3 mt-1"/>
                             <p>{aiMessage}</p>    
                         </div> 
                     )}
                     {loading && <MessageTyping/>}
                 </div>
+                {isSpeechEmpty && <Notification/>}
             </div>
         </>
     )
