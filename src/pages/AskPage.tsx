@@ -1,4 +1,4 @@
-import { useState, BaseSyntheticEvent } from "react";
+import { useState, BaseSyntheticEvent, useEffect } from "react";
 import gptService from "../services/gpt.service";
 import MessageTyping from "../componets/ui/MessageTyping";
 import { inputValidate } from "../utils/input-validate";
@@ -41,17 +41,23 @@ const AskPage = () => {
         setIsSpeechEmpty(true);
     }
 
-    speechRecognizer.onsoundend = () => {
-        // console.log(`ON SOUND END: ${e}`)
+    // speechRecognizer.onsoundend = () => {
+    //     // console.log(`ON SOUND END: ${e}`)
+    //     setRecording(false);
+    //     showEmptySpeechError();
+    // }
+
+    speechRecognizer.onend = (e: any) => {
+        console.log(e)
         setRecording(false);
         showEmptySpeechError();
     }
 
-    speechRecognizer.onerror = () => {
-        // console.log(`ON ERROR: ${e}`)
-        setRecording(false);
-        showEmptySpeechError();
-    }
+    // speechRecognizer.onerror = () => {
+    //     // console.log(`ON ERROR: ${e}`)
+    //     setRecording(false);
+    //     showEmptySpeechError();
+    // }
 
     speechRecognizer.onresult = (e: any) => {
         // console.log(`ON RESULT: ${e}`)
@@ -59,6 +65,7 @@ const AskPage = () => {
         voiceMessage.push(e.results[0][0].transcript)
         sendMessage()
     }
+
 
     const sendMessage = async () => {
         setIsDisabled(true)
