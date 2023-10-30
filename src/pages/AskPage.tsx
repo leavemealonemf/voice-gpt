@@ -37,35 +37,25 @@ const AskPage = () => {
         speechSynthesis.speak(textToTalk);
     }
   
+    const closeNotificationHandler = () => setIsSpeechEmpty(false);
+
     const showEmptySpeechError = () => {
         setIsSpeechEmpty(true);
     }
 
-    // speechRecognizer.onsoundend = () => {
-    //     // console.log(`ON SOUND END: ${e}`)
-    //     setRecording(false);
-    //     showEmptySpeechError();
-    // }
-
-    speechRecognizer.onend = (e: any) => {
-        console.log(e)
+    speechRecognizer.onend = () => {
+        if(!inputValidate(voiceMessage[0])) {
+            setRecording(false);
+            showEmptySpeechError();
+        } 
         setRecording(false);
-        showEmptySpeechError();
     }
 
-    // speechRecognizer.onerror = () => {
-    //     // console.log(`ON ERROR: ${e}`)
-    //     setRecording(false);
-    //     showEmptySpeechError();
-    // }
-
     speechRecognizer.onresult = (e: any) => {
-        // console.log(`ON RESULT: ${e}`)
         setRecording(false);
         voiceMessage.push(e.results[0][0].transcript)
         sendMessage()
     }
-
 
     const sendMessage = async () => {
         setIsDisabled(true)
@@ -133,7 +123,7 @@ const AskPage = () => {
                     )}
                     {loading && <MessageTyping/>}
                 </div>
-                {isSpeechEmpty && <Notification/>}
+                {isSpeechEmpty && <Notification closeNotificationHandler={closeNotificationHandler}/>}
             </div>
         </>
     )
