@@ -1,4 +1,4 @@
-import { useState, BaseSyntheticEvent, useEffect } from "react";
+import { useState, BaseSyntheticEvent } from "react";
 import gptService from "../services/gpt.service";
 import MessageTyping from "../componets/ui/MessageTyping";
 import { inputValidate } from "../utils/input-validate";
