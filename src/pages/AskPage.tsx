@@ -41,12 +41,20 @@ const AskPage = () => {
         setIsSpeechEmpty(true);
     }
 
+    speechRecognizer.onsoundend = () => {
+        // console.log(`ON SOUND END: ${e}`)
+        setRecording(false);
+        showEmptySpeechError();
+    }
+
     speechRecognizer.onerror = () => {
+        // console.log(`ON ERROR: ${e}`)
         setRecording(false);
         showEmptySpeechError();
     }
 
     speechRecognizer.onresult = (e: any) => {
+        // console.log(`ON RESULT: ${e}`)
         setRecording(false);
         voiceMessage.push(e.results[0][0].transcript)
         sendMessage()
