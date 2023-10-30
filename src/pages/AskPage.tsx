@@ -25,6 +25,7 @@ const AskPage = () => {
         if (recording === true || isDisabled === true) {
             return;
         }
+        setIsSpeechEmpty(false)
         setRecording(true);
         speechRecognizer.start();
     }
@@ -38,9 +39,6 @@ const AskPage = () => {
   
     const showEmptySpeechError = () => {
         setIsSpeechEmpty(true);
-        setTimeout(() => {
-            setIsSpeechEmpty(false);
-        }, 3000)
     }
 
     speechRecognizer.onerror = () => {
