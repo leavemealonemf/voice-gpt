@@ -4,8 +4,10 @@ import MessageTyping from "../componets/ui/MessageTyping";
 import { inputValidate } from "../utils/input-validate";
 import messageIcon from "../assets/message.svg";
 import Notification from "../componets/ui/Notification";
+import { useStores } from "../stores/root-context";
+import { observer } from "mobx-react-lite";
 
-const AskPage = () => {
+const AskPage = observer(() => {
 
     //@ts-ignore
     const [conversation, setConversation] = useState<any[]>([]);
@@ -16,6 +18,10 @@ const AskPage = () => {
     const [isDisabled, setIsDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isSpeechEmpty, setIsSpeechEmpty] = useState(false);
+
+    const {user} = useStores()
+
+    console.log(user.isAuth)
 
     const windowObj: any = window;
 
@@ -127,6 +133,6 @@ const AskPage = () => {
             </div>
         </>
     )
-}
+})
 
 export default AskPage
