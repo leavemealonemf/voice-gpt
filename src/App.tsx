@@ -7,10 +7,10 @@ function App() {
   const {user} = useStores();
 
   useEffect(() => {
-      if (localStorage.getItem('token')) {
+      if (user.isAuth === false) {
         user.checkAuth();
       }
-  }, [])
+  }, [user.isAuth])
 
   return (
     <>

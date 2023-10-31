@@ -21,7 +21,7 @@ const AskPage = observer(() => {
 
     const {user} = useStores()
 
-    console.log(user.isAuth)
+    console.log(user.user)
 
     const windowObj: any = window;
 

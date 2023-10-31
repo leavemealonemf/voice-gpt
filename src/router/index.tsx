@@ -2,6 +2,7 @@ import {Routes, Route} from "react-router-dom";
 import AuthPage from "../pages/AuthPage";
 import AskPage from "../pages/AskPage";
 import PrivateRouter from "./private";
+import MainPage from "../pages/MainPage";
 
 const AppRouter = () => {
     return (
@@ -9,6 +10,7 @@ const AppRouter = () => {
             <Route element={<PrivateRouter/>}>
                 <Route path="/gpt" element={<AskPage/>}/>
             </Route>
+            <Route path="/" element={<MainPage/>}/>
             <Route path="/auth" element={<AuthPage/>}/>
         </Routes>
     )   

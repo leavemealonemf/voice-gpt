@@ -12,6 +12,8 @@ class UserStore {
     user: IUser = {};
     auth;
     isAuth = false;
+    loading = false;
+    unauthorize = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -20,6 +22,14 @@ class UserStore {
 
     setAuth(bool: boolean) {
         this.isAuth = bool;
+    }
+
+    setLoading(bool: boolean) {
+        this.loading = bool;
+    }
+
+    setUnauthorize(bool: boolean) {
+        this.unauthorize = bool;
     }
 
     async register(email: string, password: string) {
@@ -41,25 +51,22 @@ class UserStore {
     }
 
     checkAuth() {
-        onAuthStateChanged(this.auth, async(userData) => {
+        this.setLoading(true);
+        onAuthStateChanged(this.auth, (userData) => {
             if (userData) {
-                const {token} = await userData.getIdTokenResult();
                 this.user = {
                     uid: userData.uid,
                     name: userData.email || undefined,
                 };
-                localStorage.setItem('token', token);
                 this.setAuth(true);
-                console.log(userData);
+                this.setLoading(false);
             }
             else {
-                if (localStorage.getItem('token')) {
-                    localStorage.removeItem('token');
-                    window.location.href = '/auth';
-                }
+                this.setUnauthorize(true);
                 this.setAuth(false);
+                this.setLoading(false);
                 throw new Error('Unauthorized');
-            }
+            } 
         })
     }
 }
