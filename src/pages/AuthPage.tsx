@@ -1,15 +1,27 @@
 import { observer } from "mobx-react-lite";
-import { useStores } from "../stores/root-context"
+import Register from "../componets/auth/Register";
+import Login from "../componets/auth/Login";
+import {useState} from "react";
+
+export enum currentModuleTypes {
+    LOGIN = 'login',
+    REGISTER = 'register',
+}
 
 const AuthPage = observer(() => {
 
-    const { user } = useStores();
+    const [currentModule, setCurrentModule] = useState<currentModuleTypes>(currentModuleTypes.REGISTER);
+
+    const setCurrentModuleHandler = (value: currentModuleTypes) => setCurrentModule(value);
 
     return (
-        <>
-            <div>AuthPage</div>
-            <button onClick={() => user.register("strangemisterio78@gmail.com", "haha123")}>Register</button>
-        </>
+        <div className="flex items-center justify-center h-screen">
+            {
+                currentModule === currentModuleTypes.REGISTER ? 
+                <Register setCurrentModuleHandler={setCurrentModuleHandler}/> 
+                : <Login setCurrentModuleHandler={setCurrentModuleHandler}/>
+            }
+        </div>
     )
 })
 

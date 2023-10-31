@@ -35,7 +35,6 @@ class UserStore {
     async register(email: string, password: string) {
         try {
             const {user} = await authService.createUser(email, password);
-            const {token} = await user.getIdTokenResult();
             runInAction(() => {
                 this.user = {
                     uid: user.uid,
@@ -43,7 +42,24 @@ class UserStore {
                 }
                 this.isAuth = true;
             })
-            localStorage.setItem('token', token);
+            return user;
+        } catch (error) {
+            console.log(error);
+            this.isAuth = false;
+        }
+    }
+
+    async login(email: string, password: string) {
+        try {
+            const {user} = await authService.login(email, password);
+            runInAction(() => {
+                this.user = {
+                    uid: user.uid,
+                    name: user.email || undefined,
+                }
+                this.isAuth = true;
+            })
+            return user;
         } catch (error) {
             console.log(error);
             this.isAuth = false;
