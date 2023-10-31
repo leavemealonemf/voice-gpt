@@ -2,6 +2,7 @@ import {useState, ChangeEvent, FC} from 'react';
 import { useStores } from '../../stores/root-context';
 import { useNavigate } from 'react-router-dom';
 import { currentModuleTypes } from '../../pages/AuthPage';
+import googleIcon from "../../assets/google.svg";
 
 type Props = {
     setCurrentModuleHandler: (value: currentModuleTypes) => void;
@@ -24,6 +25,16 @@ const Login: FC<Props> = ({setCurrentModuleHandler}) => {
         if (!userData) {
             alert('Неверный логин или пароль');
         }
+        navigate('/gpt');
+    }
+
+    const signUpWithGoogle = async() => {
+        const userData = await user.singUpWithGoogle();
+
+        if (!userData) {
+            alert('Ошибка авторизации');
+        }
+
         navigate('/gpt');
     }
 
@@ -51,6 +62,16 @@ const Login: FC<Props> = ({setCurrentModuleHandler}) => {
                 onClick={() => setCurrentModuleHandler(currentModuleTypes.REGISTER)} 
                 className='text-white text-xs mt-3 font-normal cursor-pointer'>Нет аккаунта? Зарегистрироваться
             </span>
+
+            <img 
+                src={googleIcon} 
+                alt="google" 
+                width={26} 
+                height={26} 
+                onClick={() => signUpWithGoogle()}
+                className='flex mt-2 cursor-pointer'
+            />
+            
         </form>
     )
 }

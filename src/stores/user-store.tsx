@@ -66,6 +66,41 @@ class UserStore {
         }
     }
 
+    async singUpWithGoogle() {
+        try {
+            const {user} = await authService.signUpWithGoogle();
+            runInAction(() => {
+                this.user = {
+                    uid: user.uid,
+                    name: user.email || undefined,
+                }
+                this.isAuth = true;
+            })
+            return user;
+        } catch (error) {
+            console.log(error);
+            this.isAuth = false;
+        }
+    }
+
+    async logout() {
+        this.setLoading(true);
+
+        try {
+            await authService.logout();
+            runInAction(() => {
+                this.setLoading(false);
+                this.setAuth(false);
+                this.setUnauthorize(true);
+            })
+        } catch(error) {
+            console.log(error);
+            this.setLoading(false);
+        } finally {
+            this.setLoading(false);
+        }
+    }
+
     checkAuth() {
         this.setLoading(true);
         onAuthStateChanged(this.auth, (userData) => {

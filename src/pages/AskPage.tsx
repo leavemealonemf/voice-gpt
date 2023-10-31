@@ -101,6 +101,12 @@ const AskPage = observer(() => {
     return (
         <>
             <div className="m-8 flex flex-col max-w-2xl">
+            <button
+                onClick={async() => await user.logout()} 
+                className="bg-transparent self-end hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded mb-5"
+            >
+                Выйти
+            </button>
                 <input type="text" 
                     value={messageEvent} 
                     onChange={(e: BaseSyntheticEvent) => setMessageEvent(e.currentTarget.value)}

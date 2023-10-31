@@ -2,6 +2,7 @@ import {useState, ChangeEvent, FC} from 'react';
 import { useStores } from '../../stores/root-context';
 import { useNavigate } from 'react-router-dom';
 import { currentModuleTypes } from '../../pages/AuthPage';
+import googleIcon from "../../assets/google.svg";
 
 type Props = {
     setCurrentModuleHandler: (value: currentModuleTypes) => void;
@@ -32,6 +33,16 @@ const Register: FC<Props> = ({setCurrentModuleHandler}) => {
         navigate('/gpt');
     }
 
+    const signUpWithGoogle = async() => {
+        const userData = await user.singUpWithGoogle();
+
+        if (!userData) {
+            alert('Ошибка авторизации');
+        }
+
+        navigate('/gpt');
+    }
+
     return (
         <form className='w-96 flex flex-col' onSubmit={onSubmit}>
             <span className="text-white font-bold text-3xl mb-5">Регистрация</span>
@@ -56,6 +67,15 @@ const Register: FC<Props> = ({setCurrentModuleHandler}) => {
                 onClick={() => setCurrentModuleHandler(currentModuleTypes.LOGIN)}
                 className='text-white text-xs mt-3 font-normal cursor-pointer'>Уже зарегистрированы? Войти
             </span>
+
+            <img 
+                src={googleIcon} 
+                alt="google" 
+                width={26} 
+                height={26} 
+                onClick={() => signUpWithGoogle()}
+                className='flex mt-2 cursor-pointer'
+            />
         </form>
     )
 }
