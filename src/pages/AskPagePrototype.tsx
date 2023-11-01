@@ -111,6 +111,8 @@ const AskPagePrototype = observer(() => {
 
                     <div className="flex items-center justify-center h-screen relative">
                         
+                        {isSpeechEmpty && <Notification closeNotificationHandler={closeNotificationHandler}/>}
+
                         {messages.length === 0 && (
                        
                             <h1 className="absolute mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-600 md:text-5xl lg:text-6xl dark:text-gray-600 text-center">VoiceGPT</h1>
@@ -147,7 +149,6 @@ const AskPagePrototype = observer(() => {
                             </div>
                         </div>  
                         {/* End Text area */}
-                        {isSpeechEmpty && <Notification closeNotificationHandler={closeNotificationHandler}/>}
                     </div>
 
 
