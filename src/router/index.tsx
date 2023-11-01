@@ -1,6 +1,5 @@
 import {Routes, Route} from "react-router-dom";
 import AuthPage from "../pages/AuthPage";
-import AskPage from "../pages/AskPage";
 import PrivateRouter from "./private";
 import MainPage from "../pages/MainPage";
 import AskPagePrototype from "../pages/AskPagePrototype";
