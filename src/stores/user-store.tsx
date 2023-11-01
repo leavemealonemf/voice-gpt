@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import authService from "../services/auth.service";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import messageStore from "./message-store";
 
 export interface IUser {
     uid?: string;
@@ -42,6 +43,7 @@ class UserStore {
                 }
                 this.isAuth = true;
             })
+            localStorage.setItem('aiVoice', 'on');
             return user;
         } catch (error) {
             console.log(error);
@@ -92,6 +94,8 @@ class UserStore {
                 this.setLoading(false);
                 this.setAuth(false);
                 this.setUnauthorize(true);
+                messageStore.clearAiMessages();
+                messageStore.clearMessages();
             })
         } catch(error) {
             console.log(error);

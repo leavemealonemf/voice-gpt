@@ -1,0 +1,11 @@
+{
+    "send_a_message": "Напишите сообщение...",
+    "settings": "Настройки",
+    "exit": "Выйти",
+    "voice_acting": "Озвучка сообщений",
+    "empty_voice_message_popup": "Чтобы задать вопрос GPT нажмите на значок микрофона и скажите информацию",
+    "voice_gpt": "VoiceGPT",
+    "welcome_to": "Добро пожаловать в",
+    "voice_gpt_about": "VoiceGpt - интеграция ChatGPT API с возможностью поиска информации с помощью голосового поиска",
+    "get_started": "Начать"
+}

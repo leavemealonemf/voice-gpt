@@ -7,24 +7,22 @@ import { inputValidate } from "../utils/input-validate";
 import Notification from "../componets/ui/Notification";
 import { useStores } from "../stores/root-context";
 import { observer } from "mobx-react-lite";
+import { aiVoiceTypes } from "../types/settings";
+import { useTranslation } from 'react-i18next';
 
 const AskPagePrototype = observer(() => {
 
-    // @ts-ignore
-
-    const [conversation, setConversation] = useState<any[]>([]);
+    const conversation: any[] = [];
     const [messageEvent, setMessageEvent] = useState('');
-    const [aiMessages, setAiMessages] = useState<string[]>([]);
     const [voiceMessage, setVoiceMessage] = useState<any[]>([]);
     const [recording, setRecording] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
     const [isSpeechEmpty, setIsSpeechEmpty] = useState(false);
-    const [messages, setMessages] = useState<string[]>([]);
 
-    const {user} = useStores()
+    const {t} = useTranslation();
 
-    console.log(user.user)
+    const {messageStore} = useStores()
 
     const windowObj: any = window;
 
@@ -75,7 +73,7 @@ const AskPagePrototype = observer(() => {
             "content": voiceMessage.length > 0 ? voiceMessage[0] : messageEvent,
         }
 
-        setMessages([...messages, voiceMessage.length > 0 ? voiceMessage[0] : messageEvent])
+        messageStore.setMessages(voiceMessage.length > 0 ? voiceMessage[0] : messageEvent);
 
         conversation.push(message);
         
@@ -91,7 +89,9 @@ const AskPagePrototype = observer(() => {
             "content": voiceMessage.length > 0 ? voiceMessage[0] : messageEvent,
         }
 
-        talk(res.data.choices[0].message.content)
+        if (localStorage.getItem('aiVoice') === aiVoiceTypes.ON) {
+            talk(res.data.choices[0].message.content);
+        }
 
         conversation.push(gptMessage);
 
@@ -100,25 +100,23 @@ const AskPagePrototype = observer(() => {
         setIsDisabled(false)
         setLoading(false);
 
-        setAiMessages([...aiMessages, res.data.choices[0].message.content])
+        messageStore.setAiMessages(res.data.choices[0].message.content);
     }
-    
+
     return (
         <Layout>
             <SideBar/>
             <div className="bg-white rounded container mx-auto">
 
-
                     <div className="flex items-center justify-center h-screen relative">
                         
                         {isSpeechEmpty && <Notification closeNotificationHandler={closeNotificationHandler}/>}
 
-                        {messages.length === 0 && (
-                       
+                        {messageStore.messages.length === 0 && (
                             <h1 className="absolute mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-600 md:text-5xl lg:text-6xl dark:text-gray-600 text-center">VoiceGPT</h1>
                         )}
 
-                        <Messages aiMessages={aiMessages} loading={loading} messages={messages}/>
+                        <Messages loading={loading} />
 
                         {/* Text area */}
                         <div className="absolute bottom-0 self-center w-full">
@@ -126,7 +124,7 @@ const AskPagePrototype = observer(() => {
                     
                                 <textarea id="chat" rows={1} 
                                     className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    placeholder="Send a message..." 
+                                    placeholder={t('send_a_message')} 
                                     value={messageEvent} 
                                     onChange={(e: BaseSyntheticEvent) => setMessageEvent(e.currentTarget.value)}
                                 />

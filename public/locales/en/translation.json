@@ -1,0 +1,11 @@
+{
+    "send_a_message": "Send a message...",
+    "settings": "Settings",
+    "exit": "Exit",
+    "voice_acting": "Voice-over of messages",
+    "empty_voice_message_popup": "To ask a question to GPT, click on the microphone icon and say the information",
+    "voice_gpt": "VoiceGPT",
+    "welcome_to": "Welcome to",
+    "voice_gpt_about": "VoiceGpt - ChatGPT API integration with the ability to search for information using voice search",
+    "get_started": "Get started"
+}
