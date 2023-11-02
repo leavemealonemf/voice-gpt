@@ -1,6 +1,6 @@
-<img src="https://cdn1.iconfinder.com/data/icons/android-9/500/android_5-1024.png" alt="drawing" width="35" style="float: left"/>
+<img src="./public/logo.png" alt="voicegpt" width="225"/>
 
-# &nbsp;VoiceGPT
+----
 
 **[VoiceGPT](https://voice-gpt-sigma.vercel.app/)** - интерграция *ChatGPT* с возможностью использования голосового поиска.
 
