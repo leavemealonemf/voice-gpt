@@ -7,5 +7,13 @@
     "voice_gpt": "VoiceGPT",
     "welcome_to": "Welcome to",
     "voice_gpt_about": "VoiceGpt - ChatGPT API integration with the ability to search for information using voice search",
-    "get_started": "Get started"
+    "get_started": "Get started",
+    "register": "Registration",
+    "email": "Email",
+    "password": "Password",
+    "register_button": "Register",
+    "already_registered": "Already registered?",
+    "to_come_in": "Sign in",
+    "not_registered": "Don't have an account?",
+    "sign_in": "Login"
 }

@@ -6,7 +6,7 @@ type Props = {
 
 const Layout: FC<Props> = ({children}) => {
   return (
-    <div style={{display: 'grid', gridTemplateColumns: "1fr 4fr"}} className="">
+    <div className="flex">
         {children}
     </div>
   )

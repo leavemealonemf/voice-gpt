@@ -7,5 +7,13 @@
     "voice_gpt": "VoiceGPT",
     "welcome_to": "Добро пожаловать в",
     "voice_gpt_about": "VoiceGpt - интеграция ChatGPT API с возможностью поиска информации с помощью голосового поиска",
-    "get_started": "Начать"
+    "get_started": "Начать",
+    "register": "Регистрация",
+    "email": "Почта",
+    "password": "Пароль",
+    "register_button": "Зарегистрироваться",
+    "already_registered": "Уже зарегистрированы?",
+    "to_come_in": "Войти",
+    "sign_in": "Вход",
+    "not_registered": "Нет аккаунта?"
 }

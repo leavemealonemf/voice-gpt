@@ -13,10 +13,10 @@ const SideBar: FC = () => {
 
   const navigate = useNavigate();
 
-  return (
-    <div className='text-white container mx-auto relative'>
 
-  
+  return (
+    <div className={`text-white min-h-screen w-72`}>
+
       <div className='flex flex-col items-center justify-center mt-7'>
         <span className='text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white'>VoiceGPT</span>
         <span className='text-sm font-normal text-gray-500 dark:text-gray-400 -mt-3'>Version beta 0.1</span>

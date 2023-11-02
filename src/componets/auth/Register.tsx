@@ -3,6 +3,7 @@ import { useStores } from '../../stores/root-context';
 import { useNavigate } from 'react-router-dom';
 import { currentModuleTypes } from '../../pages/AuthPage';
 import googleIcon from "../../assets/google.svg";
+import { useTranslation } from 'react-i18next';
 
 type Props = {
     setCurrentModuleHandler: (value: currentModuleTypes) => void;
@@ -11,6 +12,8 @@ type Props = {
 const Register: FC<Props> = ({setCurrentModuleHandler}) => {
 
     const {user} = useStores();
+
+    const {t} = useTranslation();
 
     const navigate = useNavigate();
 
@@ -45,9 +48,9 @@ const Register: FC<Props> = ({setCurrentModuleHandler}) => {
 
     return (
         <form className='w-96 flex flex-col' onSubmit={onSubmit}>
-            <span className="text-white font-bold text-3xl mb-5">Регистрация</span>
+            <span className="text-white font-bold text-3xl mb-5">{t('register')}</span>
             <div className="mb-6">
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Почта</label>
+                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('email')}</label>
                 <input
                     value={email}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)} 
@@ -55,17 +58,17 @@ const Register: FC<Props> = ({setCurrentModuleHandler}) => {
                 />
             </div>
             <div className="mb-6">
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Пароль</label>
+                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t('password')}</label>
                 <input
                     value={password}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)} 
                     type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required 
                 />
             </div>
-            <button type="submit" className="text-white self-start bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Зарегистрироваться</button>
+            <button type="submit" className="text-white self-start bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{t('register_button')}</button>
             <span
                 onClick={() => setCurrentModuleHandler(currentModuleTypes.LOGIN)}
-                className='text-white text-xs mt-3 font-normal cursor-pointer'>Уже зарегистрированы? <u>Войти</u>
+                className='text-white text-xs mt-3 font-normal cursor-pointer'>{t('already_registered')} <u>{t('to_come_in')}</u>
             </span>
 
             <div className="mt-2 flex gap-2 items-center">

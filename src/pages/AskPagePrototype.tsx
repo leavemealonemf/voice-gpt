@@ -1,7 +1,7 @@
 import Layout from "../componets/Layout"
 import Messages from "../componets/Messages"
 import SideBar from "../componets/SideBar"
-import { useState, BaseSyntheticEvent } from "react";
+import { useState, KeyboardEvent, ChangeEvent } from "react";
 import gptService from "../services/gpt.service";
 import { inputValidate } from "../utils/input-validate";
 import Notification from "../componets/ui/Notification";
@@ -60,9 +60,19 @@ const AskPagePrototype = observer(() => {
 
     speechRecognizer.onresult = (e: any) => {
         setRecording(false);
-        voiceMessage.push(e.results[0][0].transcript)
-        sendMessage()
+        voiceMessage.push(e.results[0][0].transcript);
+        sendMessage();
     }
+
+    const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            if (isDisabled || !inputValidate(messageEvent)) {
+                return;
+            } else {
+                sendMessage();
+            }
+        }
+    };
 
     const sendMessage = async () => {
         setIsDisabled(true)
@@ -106,9 +116,8 @@ const AskPagePrototype = observer(() => {
     return (
         <Layout>
             <SideBar/>
-            <div className="bg-white rounded container mx-auto">
-
-                    <div className="flex items-center justify-center h-screen relative">
+            <div className="bg-white rounded w-screen">
+                    <div className="container flex mx-auto items-center justify-center h-screen relative">
                         
                         {isSpeechEmpty && <Notification closeNotificationHandler={closeNotificationHandler}/>}
 
@@ -122,11 +131,12 @@ const AskPagePrototype = observer(() => {
                         <div className="absolute bottom-0 self-center w-full">
                             <div className="flex items-center py-2 px-3 bg-gray-50 rounded-lg dark:bg-white">
                     
-                                <textarea id="chat" rows={1} 
+                                <input id="chat"
                                     className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                     placeholder={t('send_a_message')} 
                                     value={messageEvent} 
-                                    onChange={(e: BaseSyntheticEvent) => setMessageEvent(e.currentTarget.value)}
+                                    onKeyPress={handleKeyPress}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setMessageEvent(e.currentTarget.value)}
                                 />
                                 <button 
                                     onClick={() => sendMessage()}
